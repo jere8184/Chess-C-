@@ -199,4 +199,47 @@ using namespace std;
 		return true;
 	}
 
+	bool Piece::ValidateAttack(int fileDelta, int rankDelta) {
+		
+		int finalFile = FileIndex + fileDelta;
+		int finalRank = RankIndex + rankDelta;
+
+		if (FileIndex + fileDelta > 7 || RankIndex + rankDelta > 7)
+		{
+			cout << "off the board" << endl;
+			return false;
+		}
+
+		else if (Board::board[finalFile][finalRank].isOccupied == false) 
+		{
+			cout << "square not occupied" << endl;
+			return false;
+		}
+
+		return true;
+	}
+
+
+	void Piece::Captured() {
+		
+		this->Square->Occupiere = nullptr;
+		this->Square->isOccupied = false;
+		this->IsCaptured = true;
+	}
+
+
+	void Piece::Attack(int file, int rank) {
+
+		this->Square->isOccupied = false;
+		this->Square->Occupiere = nullptr;
+		this->RankIndex = rank;
+		this->FileIndex = file;
+		this->Coordinate = To_Coordinate(file, rank);
+		Board::board[file][rank].Occupiere->Captured();
+		this->Square = &Board::board[file][rank];
+		this->Square->isOccupied = true;
+		this->Square->Occupiere = this;
+
+	}
+
 
