@@ -12,6 +12,7 @@ using namespace std;
 int main(){
 	Board::Board();
 	White_Pawn p(0,1);
+	White_Pawn P(0, 6);
 	p.Move2();
 	p.Move2();
 	p.Move2();

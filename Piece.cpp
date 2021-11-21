@@ -106,13 +106,95 @@ using namespace std;
 
 	bool Piece::ValidateMove(int fileDelta, int rankDelta) {
 
+		auto CheckUp = [this, rankDelta]() {
+			int finalRank = RankIndex + rankDelta;
+
+			for (int rank = RankIndex + 1; rank < finalRank + 1; rank++) {
+				if (Board::board[FileIndex][rank].isOccupied == true) {
+					cout << "collision" << endl;
+					return false;
+				}
+			}
+			return true;
+		};
+
+		auto CheckDown = [this, rankDelta]() {
+			int finalRank = RankIndex + rankDelta;
+
+			for (int rank = RankIndex - 1; rank > finalRank - 1; rank--) {
+				if (Board::board[FileIndex][rank].isOccupied == true) {
+					cout << "collision" << endl;
+					return false;
+				}
+			}
+			return true;
+		};
+
+		auto CheckLeft = [this, fileDelta]() {
+			int finalFile = FileIndex + fileDelta;
+
+			for (int file = FileIndex - 1; file > finalFile - 1; file--) {
+				if (Board::board[file][RankIndex].isOccupied == true) {
+					cout << "collision" << endl;
+					return false;
+				}
+			}
+			return true;
+		};
+
+		auto CheckRight = [this, fileDelta]() {
+			int finalFile = FileIndex + fileDelta;
+
+			for (int file = FileIndex + 1; file < finalFile + 1; file++) {
+				if (Board::board[file][RankIndex].isOccupied == true) {
+					cout << "collision" << endl;
+					return false;
+				}
+			}
+			return true;
+		};
+
+		auto CheckUpRight = [this, fileDelta]() {
+			int finalFile = FileIndex + fileDelta;
+			
+
+			for (int file = FileIndex + 1; file < finalFile + 1; file++) {
+				int rank = RankIndex + 1;
+				if (Board::board[file][rank].isOccupied == true) {
+					cout << "collision" << endl;
+					return false;
+				}
+				rank++;
+			}
+			return true;
+		};
+
+
 		if (FileIndex + fileDelta > 7 || RankIndex + rankDelta > 7) 
 		{
-			cout << "off the board";
+			cout << "off the board" << endl;
 			return false;
 		}
 
+		else if (CheckUp() == false && rankDelta > 0) {
+			return false;
+		}
 
+		else if (CheckDown() == false && rankDelta < 0) {
+			return false;
+		}
+
+		else if (CheckRight() == false && fileDelta > 0) {
+			return false;
+		}
+
+		else if (CheckLeft() == false && fileDelta < 0) {
+			return false;
+		}
+
+		else if (CheckUpRight() == false && fileDelta < 0 && rankDelta > 0) {
+			return false;
+		}
 
 		return true;
 	}
