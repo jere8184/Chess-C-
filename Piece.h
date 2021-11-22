@@ -21,11 +21,15 @@ public:
 
 	bool IsCaptured = false;
 
-	bool ValidateAttack(int fileDelta, int rankDelta);
+	bool ValidateDiagAttack(int fileDelta, int rankDelta);
+
+	bool ValidateStraightAttack(int fileDelta, int rankDelta);
 
 	string Coordinate;
 
-	string Symbol = "A";
+	string Symbol = "U";
+
+	string Team;
 
 	Square* Square;
 
@@ -41,6 +45,8 @@ public:
 
 	void Move(string coordinate);
 
-	bool ValidateMove(int fileDelta, int rankDelta);
+	bool ValidateStraightMove(int fileDelta, int rankDelta);
+
+	bool ValidateDiagMove(int fileDelta, int rankDelta);
 
 };

@@ -104,14 +104,13 @@ using namespace std;
 		this->Square->Occupiere = this;
 	}
 
-	bool Piece::ValidateMove(int fileDelta, int rankDelta) {
+	bool Piece::ValidateStraightMove(int fileDelta, int rankDelta) {
 
 		auto CheckUp = [this, rankDelta]() {
 			int finalRank = RankIndex + rankDelta;
 
 			for (int rank = RankIndex + 1; rank < finalRank + 1; rank++) {
 				if (Board::board[FileIndex][rank].isOccupied == true) {
-					cout << "collision" << endl;
 					return false;
 				}
 			}
@@ -123,7 +122,6 @@ using namespace std;
 
 			for (int rank = RankIndex - 1; rank > finalRank - 1; rank--) {
 				if (Board::board[FileIndex][rank].isOccupied == true) {
-					cout << "collision" << endl;
 					return false;
 				}
 			}
@@ -135,7 +133,6 @@ using namespace std;
 
 			for (int file = FileIndex - 1; file > finalFile - 1; file--) {
 				if (Board::board[file][RankIndex].isOccupied == true) {
-					cout << "collision" << endl;
 					return false;
 				}
 			}
@@ -147,21 +144,60 @@ using namespace std;
 
 			for (int file = FileIndex + 1; file < finalFile + 1; file++) {
 				if (Board::board[file][RankIndex].isOccupied == true) {
-					cout << "collision" << endl;
 					return false;
 				}
 			}
 			return true;
 		};
 
+
+		if (FileIndex + fileDelta > 7 || RankIndex + rankDelta > 7 || RankIndex + rankDelta < 0 || FileIndex + fileDelta < 0)
+		{
+			cout << "off the board" << endl;
+			return false;
+		}
+
+		else if (fileDelta != 0 && rankDelta != 0) {
+			cout << "non linear move" << endl;
+			return false;
+		}
+
+		else if (rankDelta > 0 && CheckUp() == true) {
+			return true;
+		}
+
+		else if (CheckDown() == true && rankDelta < 0) {
+			return true;
+		}
+
+		else if (CheckRight() == true && fileDelta > 0) {
+			return true;
+		}
+
+		else if (CheckLeft() == true && fileDelta < 0) {
+			return true;
+		}
+
+		else
+		{
+			cout << "collision" << endl;
+			return false;
+		}
+
+
+	}
+
+	bool Piece::ValidateDiagMove(int fileDelta, int rankDelta) {
+
+
+
 		auto CheckUpRight = [this, fileDelta]() {
 			int finalFile = FileIndex + fileDelta;
-			
+			int rank = RankIndex + 1;
 
 			for (int file = FileIndex + 1; file < finalFile + 1; file++) {
-				int rank = RankIndex + 1;
+
 				if (Board::board[file][rank].isOccupied == true) {
-					cout << "collision" << endl;
 					return false;
 				}
 				rank++;
@@ -169,50 +205,271 @@ using namespace std;
 			return true;
 		};
 
+		auto CheckUpLeft = [this, fileDelta]() {
+			int finalFile = FileIndex + fileDelta;
+			int rank = RankIndex + 1;
 
-		if (FileIndex + fileDelta > 7 || RankIndex + rankDelta > 7) 
+			for (int file = FileIndex - 1; file > finalFile - 1; file--) {
+
+				if (Board::board[file][rank].isOccupied == true) {
+					return false;
+				}
+				rank++;
+			}
+			return true;
+		};
+
+		auto CheckDownRight = [this, fileDelta]() {
+			int finalFile = FileIndex + fileDelta;
+			int rank = RankIndex + 1;
+
+			for (int file = FileIndex + 1; file < finalFile + 1; file++) {
+
+				if (Board::board[file][rank].isOccupied == true) {
+					return false;
+				}
+				rank--;
+			}
+			return true;
+		};
+
+		auto CheckDownLeft = [this, fileDelta]() {
+			int finalFile = FileIndex + fileDelta;
+			int rank = RankIndex + 1;
+
+			for (int file = FileIndex - 1; file > finalFile - 1; file--) {
+
+				if (Board::board[file][rank].isOccupied == true) {
+					return false;
+				}
+				rank--;
+			}
+			return true;
+		};
+
+		if (FileIndex + fileDelta > 7 || RankIndex + rankDelta > 7 || RankIndex + rankDelta < 0 || FileIndex + fileDelta < 0)
 		{
 			cout << "off the board" << endl;
 			return false;
 		}
 
-		else if (CheckUp() == false && rankDelta > 0) {
+		else if (fileDelta*1 != rankDelta*1) {
+			cout << "non Diag move" << endl;
 			return false;
 		}
 
-		else if (CheckDown() == false && rankDelta < 0) {
+		else if (CheckUpRight() == true && fileDelta > 0 && rankDelta > 0) {
+			return true;
+		}
+
+		else if (CheckUpLeft() == true && fileDelta < 0 && rankDelta > 0) {
+			return true;
+		}
+
+		else if (CheckDownRight() == true && fileDelta > 0 && rankDelta < 0) {
+			return true;
+		}
+
+		else if (CheckDownLeft() == true && fileDelta < 0 && rankDelta < 0) {
+			return true;
+		}
+
+		else
+		{
+			cout << "collision" << endl;
+			return false;
+		}
+	}
+
+	bool Piece::ValidateDiagAttack(int fileDelta, int rankDelta) {
+		
+		int finalFile = FileIndex + fileDelta;
+		int finalRank = RankIndex + rankDelta;
+
+		auto CheckUpRight = [this, fileDelta]() {
+			int finalFile = FileIndex + fileDelta;
+			int rank = RankIndex + 1;
+
+			for (int file = FileIndex + 1; file < finalFile; file++) {
+
+				if (Board::board[file][rank].isOccupied == true) {
+					return false;
+				}
+				rank++;
+			}
+			return true;
+		};
+
+		auto CheckUpLeft = [this, fileDelta]() {
+			int finalFile = FileIndex + fileDelta;
+			int rank = RankIndex + 1;
+
+			for (int file = FileIndex - 1; file > finalFile; file--) {
+
+				if (Board::board[file][rank].isOccupied == true) {
+					return false;
+				}
+				rank++;
+			}
+			return true;
+		};
+
+		auto CheckDownRight = [this, fileDelta]() {
+			int finalFile = FileIndex + fileDelta;
+			int rank = RankIndex + 1;
+
+			for (int file = FileIndex + 1; file < finalFile; file++) {
+
+				if (Board::board[file][rank].isOccupied == true) {
+					return false;
+				}
+				rank--;
+			}
+			return true;
+		};
+
+		auto CheckDownLeft = [this, fileDelta]() {
+			int finalFile = FileIndex + fileDelta;
+			int rank = RankIndex + 1;
+
+			for (int file = FileIndex - 1; file > finalFile; file--) {
+
+				if (Board::board[file][rank].isOccupied == true) {
+					return false;
+				}
+				rank--;
+			}
+			return true;
+		};
+
+		if (FileIndex + fileDelta > 7 || RankIndex + rankDelta > 7 || RankIndex + rankDelta < 0 || FileIndex + fileDelta < 0)
+		{
+			cout << "off the board" << endl;
 			return false;
 		}
 
-		else if (CheckRight() == false && fileDelta > 0) {
+		else if (fileDelta * 1 != rankDelta * 1) {
+			cout << "non Diag move" << endl;
 			return false;
 		}
 
-		else if (CheckLeft() == false && fileDelta < 0) {
+		if (Board::board[finalFile][finalRank].isOccupied == false) 
+		{
+			cout << "square not occupied" << endl;
 			return false;
 		}
 
-		else if (CheckUpRight() == false && fileDelta < 0 && rankDelta > 0) {
+		else if (CheckUpRight() == true && fileDelta > 0 && rankDelta > 0) {
+			return true;
+		}
+
+		else if (CheckUpLeft() == true && fileDelta < 0 && rankDelta > 0) {
+			return true;
+		}
+
+		else if (CheckDownRight() == true && fileDelta > 0 && rankDelta < 0) {
+			return true;
+		}
+
+		else if (CheckDownLeft() == true && fileDelta < 0 && rankDelta < 0) {
+			return true;
+		}
+
+		else
+		{
+			cout << "collision" << endl;
 			return false;
 		}
 
 		return true;
 	}
 
-	bool Piece::ValidateAttack(int fileDelta, int rankDelta) {
-		
+	bool Piece::ValidateStraightAttack(int fileDelta, int rankDelta) {
+
 		int finalFile = FileIndex + fileDelta;
 		int finalRank = RankIndex + rankDelta;
 
-		if (FileIndex + fileDelta > 7 || RankIndex + rankDelta > 7)
+		auto CheckUp = [this, rankDelta]() {
+			int finalRank = RankIndex + rankDelta;
+
+			for (int rank = RankIndex + 1; rank < finalRank; rank++) {
+				if (Board::board[FileIndex][rank].isOccupied == true) {
+					return false;
+				}
+			}
+			return true;
+		};
+
+		auto CheckDown = [this, rankDelta]() {
+			int finalRank = RankIndex + rankDelta;
+
+			for (int rank = RankIndex - 1; rank > finalRank; rank--) {
+				if (Board::board[FileIndex][rank].isOccupied == true) {
+					return false;
+				}
+			}
+			return true;
+		};
+
+		auto CheckLeft = [this, fileDelta]() {
+			int finalFile = FileIndex + fileDelta;
+
+			for (int file = FileIndex - 1; file > finalFile; file--) {
+				if (Board::board[file][RankIndex].isOccupied == true) {
+					return false;
+				}
+			}
+			return true;
+		};
+
+		auto CheckRight = [this, fileDelta]() {
+			int finalFile = FileIndex + fileDelta;
+
+			for (int file = FileIndex + 1; file < finalFile; file++) {
+				if (Board::board[file][RankIndex].isOccupied == true) {
+					return false;
+				}
+			}
+			return true;
+		};
+
+
+		if (Board::board[finalFile][finalRank].isOccupied == false)
+		{
+			cout << "square not occupied" << endl;
+			return false;
+		}
+
+		else if (FileIndex + fileDelta > 7 || RankIndex + rankDelta > 7 || RankIndex + rankDelta < 0 || FileIndex + fileDelta < 0)
 		{
 			cout << "off the board" << endl;
 			return false;
 		}
 
-		else if (Board::board[finalFile][finalRank].isOccupied == false) 
+		else if (fileDelta != 0 && rankDelta != 0) {
+			cout << "non linear move" << endl;
+			return false;
+		}
+
+		else if (rankDelta > 0 && CheckUp() == true) {
+			return true;
+		}
+
+		else if (CheckDown() == true && rankDelta < 0) {
+			return true;
+		}
+
+		else if (CheckRight() == true && fileDelta > 0) {
+			return true;
+		}
+
+		else if (CheckLeft() == true && fileDelta < 0) {
+			return true;
+		}
+
+		else
 		{
-			cout << "square not occupied" << endl;
+			cout << "collision" << endl;
 			return false;
 		}
 
