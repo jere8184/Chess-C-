@@ -82,5 +82,5 @@ void Knight::KnightAttack(int DestFile, int DestRank) {
 Knight::Knight(int file, int rank, string colour)
 	: Piece(file, rank, colour)
 {
-	this->Symbol = "Kn";
+	this->Symbol = "N";
 }
