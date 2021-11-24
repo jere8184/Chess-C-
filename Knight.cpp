@@ -16,7 +16,7 @@ bool Knight::ValidateKnightMove(int fileDelta, int rankDelta) {
 	return false;
 	}
 
-	else if ((fileDelta != 2 && rankDelta != 1) && (rankDelta != 2 && fileDelta != 1)) {
+	else if ((fileDelta != 2 || rankDelta != 1) && (rankDelta != 2 || fileDelta != 1)) {
 		cout << "invalid Knight move" << endl;
 		return false;
 	}
@@ -43,7 +43,7 @@ bool Knight::ValidateKnightAttack(int fileDelta, int rankDelta) {
 		return false;
 	}
 
-	else if ((fileDelta != 2 && rankDelta != 1) || (rankDelta != 2 && fileDelta != 1)) {
+	else if ((fileDelta != 2 || rankDelta != 1) || (rankDelta != 2 || fileDelta != 1)) {
 		cout << "invalid Knight move" << endl;
 		return false;
 	}

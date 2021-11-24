@@ -25,8 +25,14 @@ int main(){
 	White_Pawn f(5, 1);
 	White_Pawn g(6, 1);
 	White_Pawn h(7, 1);
-	Queen Q(0, 0, "White");
-	Knight Kn(1, 0, "White");
+	Rook r(0, 0, "White");
+	Knight kn(1, 0, "White");
+	Bishop b0(2, 0, "White");
+	Queen q(3, 0, "White");
+	King k(4, 0, "White");
+	Knight kn1(5, 0, "White");
+	Bishop b1(6, 0, "White");
+	Rook r1(7, 0, "White");
 
 	Black_Pawn A(0, 6);
 	Black_Pawn B(1, 6);
@@ -36,16 +42,24 @@ int main(){
 	Black_Pawn F(5, 6);
 	Black_Pawn G(6, 6);
 	Black_Pawn H(7, 6);
+	Rook R(0, 7, "Black");
+	Knight Kn(1, 7, "Black");
+	Bishop B0(2, 7, "Black");
+	Queen Q(3, 7, "Black");
+	King K(4, 7, "Black");
+	Knight Kn1(5, 7, "Black");
+	Bishop B1(6, 7, "Black");
+	Rook R1(7, 7, "Black");
 
 
 
 	//a.Move2();
 	//B.AttackLeft();
 	//Piece::To_indexs()
-	Q.QueenDiagAttack(1, 1);
+	//Q.QueenDiagAttack(1, 1);
 	//Q.QueenMove(, 2);
-	a.Move2();
-	Kn.KnightMove(2, 2);
+	//a.Move2();
+	kn.KnightMove(2, 2);
 	
 	Board::PrintGamestate();
 
