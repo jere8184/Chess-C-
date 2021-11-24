@@ -4,7 +4,7 @@
 bool King::ValidateKingMove(int fileDelta, int rankDelta) {
 	fileDelta = fileDelta * 1;
 	rankDelta = rankDelta * 1;
-	if ((fileDelta != 1 || fileDelta != 0) || (rankDelta != 1 || rankDelta != 0)) {
+	if ((fileDelta != 1 && fileDelta != 0) || (rankDelta != 1 && rankDelta != 0)) {
 		cout << "king can only move one square at a time" << endl;
 		return false;
 	}

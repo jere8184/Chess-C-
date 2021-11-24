@@ -8,6 +8,10 @@
 #include"White_Pawn.h"
 #include"Black_Pawn.h"
 #include"Queen.h"
+#include"Bishop.h"
+#include"King.h"
+#include"Rook.h"
+#include"Knight.h"
 
 using namespace std;
 
@@ -22,6 +26,7 @@ int main(){
 	White_Pawn g(6, 1);
 	White_Pawn h(7, 1);
 	Queen Q(0, 0, "White");
+	Knight Kn(1, 0, "White");
 
 	Black_Pawn A(0, 6);
 	Black_Pawn B(1, 6);
@@ -40,6 +45,7 @@ int main(){
 	Q.QueenDiagAttack(1, 1);
 	//Q.QueenMove(, 2);
 	a.Move2();
+	Kn.KnightMove(2, 2);
 	
 	Board::PrintGamestate();
 
