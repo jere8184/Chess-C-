@@ -30,13 +30,9 @@ void Queen::QueenStraightAttack(int DestFile, int DestRank) {
 	}
 }
 
-void QueenStraightAttack(int DestFile, int DestRank);
 
-
-Queen::Queen(int file, int rank, string team)
-	: Piece(file, rank)
+Queen::Queen(int file, int rank, string colour)
+	: Piece(file, rank, colour)
 {
 	this->Symbol = "Q";
-	this->Team = team;
-
 }

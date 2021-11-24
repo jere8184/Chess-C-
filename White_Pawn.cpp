@@ -2,7 +2,7 @@
 
 
 White_Pawn::White_Pawn(int file, int rank)
-	: Piece(file, rank)
+	: Piece(file, rank, "White")
 {
 	this->Symbol = "p";
 }

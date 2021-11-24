@@ -21,7 +21,7 @@ int main(){
 	White_Pawn f(5, 1);
 	White_Pawn g(6, 1);
 	White_Pawn h(7, 1);
-	Queen Q(0, 0, "white");
+	Queen Q(0, 0, "White");
 
 	Black_Pawn A(0, 6);
 	Black_Pawn B(1, 6);

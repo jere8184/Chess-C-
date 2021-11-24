@@ -1,7 +1,7 @@
 #include "Black_Pawn.h"
 
 Black_Pawn::Black_Pawn(int file, int rank)
-	: Piece(file, rank)
+	: Piece(file, rank, "Black")
 {
 	this->Symbol = "P";
 }

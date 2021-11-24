@@ -3,11 +3,13 @@
 using namespace std;
 
 
-	Piece::Piece(int fileIndex, int rankIndex) {
-		this->RankIndex = rankIndex;
-		this->FileIndex = fileIndex;
-		this->Coordinate = To_Coordinate(FileIndex, RankIndex);
-		this->Square = &Board::board[FileIndex][RankIndex];
+	Piece::Piece(int fileIndex, int rankIndex, string colour)
+		: FileIndex(fileIndex), RankIndex(rankIndex), Colour(colour), Coordinate(To_Coordinate(FileIndex, RankIndex)),Square(&Board::board[FileIndex][RankIndex])
+	{
+		//this->RankIndex = rankIndex;
+		//this->FileIndex = fileIndex;
+		//this->Coordinate = To_Coordinate(FileIndex, RankIndex);
+		//this->Square = &Board::board[FileIndex][RankIndex];
 		this->Square -> isOccupied = true;
 		this->Square -> Occupiere = this;
 	}
@@ -359,6 +361,12 @@ using namespace std;
 			return false;
 		}
 
+		else if (Board::board[finalFile][finalRank].Occupiere->Colour == this->Colour)
+		{
+			cout << "cannot capture piece of same colour" << endl;
+			return false;
+		}
+
 		else if (CheckUpRight() == true && fileDelta > 0 && rankDelta > 0) {
 			return true;
 		}
@@ -434,22 +442,30 @@ using namespace std;
 		};
 
 
-		if (Board::board[finalFile][finalRank].isOccupied == false)
+		if (FileIndex + fileDelta > 7 || RankIndex + rankDelta > 7 || RankIndex + rankDelta < 0 || FileIndex + fileDelta < 0)
+		{
+		cout << "off the board" << endl;
+		return false;
+		}
+
+		else if (fileDelta != 0 && rankDelta != 0) {
+		cout << "non linear move" << endl;
+		return false;
+		}
+
+		else if (Board::board[finalFile][finalRank].isOccupied == false)
 		{
 			cout << "square not occupied" << endl;
 			return false;
 		}
 
-		else if (FileIndex + fileDelta > 7 || RankIndex + rankDelta > 7 || RankIndex + rankDelta < 0 || FileIndex + fileDelta < 0)
+		else if (Board::board[finalFile][finalRank].Occupiere-> Colour == this->Colour)
 		{
-			cout << "off the board" << endl;
+			cout << "cannot capture piece of same colour" << endl;
 			return false;
 		}
 
-		else if (fileDelta != 0 && rankDelta != 0) {
-			cout << "non linear move" << endl;
-			return false;
-		}
+
 
 		else if (rankDelta > 0 && CheckUp() == true) {
 			return true;
@@ -498,5 +514,6 @@ using namespace std;
 		this->Square->Occupiere = this;
 
 	}
+
 
 

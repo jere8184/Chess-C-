@@ -5,7 +5,7 @@
 class Queen : Piece
 {
 public:
-	Queen(int file, int rank, string team);
+	Queen(int file, int rank, string colour);
 
 	void QueenDiagMove(int DestFile, int DestRank);
 

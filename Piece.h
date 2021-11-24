@@ -29,21 +29,22 @@ public:
 
 	string Symbol = "U";
 
-	string Team;
+	string Colour;
 
 	Square* Square;
 
-	Piece(int fileIndex, int rankIndex);
+	Piece(int fileIndex, int rankIndex, string colour);
 
-	void Move(int File, int Rank);
+	void Move(int file, int rank);
 
-	void Attack(int File, int Rank);
+	void Attack(int file, int rank);
 
 	static string To_Coordinate(int fileIndex, int rankIndex);
 
 	static tuple<int, int> To_indexs(string coordinate);
 
 	void Move(string coordinate);
+
 
 	bool ValidateStraightMove(int fileDelta, int rankDelta);
 
