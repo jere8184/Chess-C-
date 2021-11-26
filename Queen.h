@@ -14,5 +14,7 @@ public:
 	void QueenDiagAttack(int DestFile, int DestRank);
 
 	void QueenStraightAttack(int DestFile, int DestRank);
+
+	void TryMove(int DestFile, int DestRank);
 };
 

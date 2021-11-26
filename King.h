@@ -14,5 +14,7 @@ public:
 	void KingStraightAttack(int DestFile, int DestRank);
 
 	bool ValidateKingMove(int fileDelta, int rankDelta);
+
+	void TryMove(int DestFile, int DestRank);
 };
 

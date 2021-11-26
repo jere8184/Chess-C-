@@ -1,14 +1,10 @@
 #include "Knight.h"
 
 
-bool Knight::ValidateKnightMove(int fileDelta, int rankDelta) {
+bool Knight::ValidateKnightMove(int destFile, int destRank) {
 	
-	int destFile = FileIndex + fileDelta;
-	int destRank = RankIndex + rankDelta;
-
-	fileDelta = fileDelta * 1;
-	rankDelta = rankDelta * 1;
-
+	int fileDelta = destFile - FileIndex;
+	int rankDelta = destRank - RankIndex;
 
 	if (FileIndex + fileDelta > 7 || RankIndex + rankDelta > 7 || RankIndex + rankDelta < 0 || FileIndex + fileDelta < 0)
 	{
@@ -16,7 +12,7 @@ bool Knight::ValidateKnightMove(int fileDelta, int rankDelta) {
 	return false;
 	}
 
-	else if ((fileDelta != 2 || rankDelta != 1) && (rankDelta != 2 || fileDelta != 1)) {
+	else if ((abs(fileDelta) != 2 || abs(rankDelta) != 1) && (abs(rankDelta) != 2 || abs(fileDelta) != 1)) {
 		cout << "invalid Knight move" << endl;
 		return false;
 	}
@@ -31,11 +27,10 @@ bool Knight::ValidateKnightMove(int fileDelta, int rankDelta) {
 	}
 }
 
-bool Knight::ValidateKnightAttack(int fileDelta, int rankDelta) {
-	int destFile = FileIndex + fileDelta;
-	int destRank = RankIndex + rankDelta;
-	fileDelta = fileDelta * 1;
-	rankDelta = rankDelta * 1;
+bool Knight::ValidateKnightAttack(int DestFile, int DestRank) {
+	int fileDelta = DestFile - FileIndex;
+	int rankDelta = DestRank - RankIndex;
+
 
 	if (FileIndex + fileDelta > 7 || RankIndex + rankDelta > 7 || RankIndex + rankDelta < 0 || FileIndex + fileDelta < 0)
 	{
@@ -43,12 +38,13 @@ bool Knight::ValidateKnightAttack(int fileDelta, int rankDelta) {
 		return false;
 	}
 
-	else if ((fileDelta != 2 || rankDelta != 1) || (rankDelta != 2 || fileDelta != 1)) {
+
+	else if ((abs(fileDelta) != 2 || abs(rankDelta) != 1) && (abs(rankDelta) != 2 || abs(fileDelta) != 1)) {
 		cout << "invalid Knight move" << endl;
 		return false;
 	}
 
-	else if (Board::board[destFile][destRank].isOccupied == false) {
+	else if (Board::board[DestFile][DestRank].isOccupied == false) {
 		cout << "square not occupied" << endl;
 		return true;
 	}
@@ -60,27 +56,26 @@ bool Knight::ValidateKnightAttack(int fileDelta, int rankDelta) {
 }
 
 void Knight::KnightMove(int DestFile, int DestRank) {
-	int fileDelta = DestFile - FileIndex;
-	int rankDelta = DestRank - RankIndex;
-
-
-	if (ValidateKnightMove(fileDelta, rankDelta) == true) {
+	if (ValidateKnightMove(DestFile, DestRank) == true) {
 		Move(DestFile, DestRank);
 	}
 }
 
 void Knight::KnightAttack(int DestFile, int DestRank) {
-	int fileDelta = DestFile - FileIndex;
-	int rankDelta = DestRank - RankIndex;
-
-
-	if (ValidateKnightAttack(fileDelta, rankDelta) == true) {
+	if (ValidateKnightAttack(DestFile, DestRank) == true) {
 		Move(DestFile, DestRank);
 	}
+}
+
+
+void Knight::TryMove(int DestFile, int DestRank) {
+	KnightAttack(DestFile, DestRank);
+	KnightMove(DestFile, DestRank);
 }
 
 Knight::Knight(int file, int rank, string colour)
 	: Piece(file, rank, colour)
 {
 	this->Symbol = "N";
+	this->Type = "Knight";
 }

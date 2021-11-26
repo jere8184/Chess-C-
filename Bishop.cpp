@@ -2,9 +2,6 @@
 
 
 void Bishop::BishopDiagMove(int DestFile, int DestRank) {
-	int fileDelta = DestFile - FileIndex;
-	int rankDelta = DestRank - RankIndex;
-
 	if (ValidateDiagMove(DestFile, DestRank) == true) {
 		Move(DestFile, DestRank);
 	}
@@ -14,6 +11,11 @@ void Bishop::BishopDiagAttack(int DestFile, int DestRank) {
 	if (ValidateDiagAttack(DestFile, DestRank) == true) {
 		Attack(DestFile, DestRank);
 	}
+}
+
+void Bishop::TryMove(int DestFile, int DestRank) {
+	BishopDiagMove(DestFile, DestRank);
+	BishopDiagAttack(DestFile, DestRank);
 }
 
 Bishop::Bishop(int file, int rank, string colour)

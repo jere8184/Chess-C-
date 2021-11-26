@@ -5,12 +5,14 @@ class White_Pawn : Piece
 public:
 	White_Pawn(int file, int rank);
 
-	void Move1();
+	void PawnMove(int destFile, int destRank);
 
-	void Move2();
+	void PawnAttack(int destFile, int destRank);
 
-	void AttackLeft();
+	void TryMove(int destFile, int destRank);
 
-	void AttackRight();
+	bool ValidatePawnMove(int destFile, int destRank);
+
+	bool ValidatePawnAttack(int destFile, int destRank);
 };
 

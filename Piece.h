@@ -13,6 +13,8 @@ class Piece {
 
 public:
 
+	bool Moved = false;
+
 	int RankIndex;
 
 	int FileIndex;
@@ -21,13 +23,15 @@ public:
 
 	bool IsCaptured = false;
 
-	bool ValidateDiagAttack(int fileDelta, int rankDelta);
+	bool ValidateDiagAttack(int destFile, int destRank);
 
-	bool ValidateStraightAttack(int fileDelta, int rankDelta);
+	bool ValidateStraightAttack(int destFile, int destRank);
 
 	string Coordinate;
 
 	string Symbol = "U";
+
+	string Type = "U";
 
 	string Colour;
 
@@ -45,9 +49,9 @@ public:
 
 	void Move(string coordinate);
 
+	void TryMove(int file, int rank);
 
-	bool ValidateStraightMove(int fileDelta, int rankDelta);
+	bool ValidateStraightMove(int destFile, int destRank);
 
-	bool ValidateDiagMove(int fileDelta, int rankDelta);
-
+	bool ValidateDiagMove(int destFile, int destRank);
 };

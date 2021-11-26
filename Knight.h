@@ -10,8 +10,10 @@ public:
 
 	void KnightAttack(int DestFile, int DestRank);
 
-	bool ValidateKnightMove(int fileDelta, int rankDelta);
+	bool ValidateKnightMove(int DestFile, int DestRank);
 
-	bool ValidateKnightAttack(int fileDelta, int rankDelta);
+	bool ValidateKnightAttack(int DestFile, int DestRank);
+
+	void TryMove(int DestFile, int DestRank);
 };
 

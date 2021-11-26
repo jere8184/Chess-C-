@@ -59,9 +59,10 @@ int main(){
 	//Q.QueenDiagAttack(1, 1);
 	//Q.QueenMove(, 2);
 	//a.Move2();
-	kn.KnightMove(2, 2);
+	//kn.KnightMove(2, 2);
 	
 	Board::PrintGamestate();
+	Board::MakeMove();
 
 
 	//Board::board[1][1] = a;
