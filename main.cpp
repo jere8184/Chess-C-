@@ -30,8 +30,8 @@ int main(){
 	Bishop b0(2, 0, "White");
 	Queen q(3, 0, "White");
 	King k(4, 0, "White");
-	Knight kn1(5, 0, "White");
-	Bishop b1(6, 0, "White");
+	Knight kn1(6, 0, "White");
+	Bishop b1(5, 0, "White");
 	Rook r1(7, 0, "White");
 
 	Black_Pawn A(0, 6);
@@ -47,8 +47,8 @@ int main(){
 	Bishop B0(2, 7, "Black");
 	Queen Q(3, 7, "Black");
 	King K(4, 7, "Black");
-	Knight Kn1(5, 7, "Black");
-	Bishop B1(6, 7, "Black");
+	Knight Kn1(6, 7, "Black");
+	Bishop B1(5, 7, "Black");
 	Rook R1(7, 7, "Black");
 
 

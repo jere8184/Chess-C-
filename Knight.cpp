@@ -46,7 +46,7 @@ bool Knight::ValidateKnightAttack(int DestFile, int DestRank) {
 
 	else if (Board::board[DestFile][DestRank].isOccupied == false) {
 		cout << "square not occupied" << endl;
-		return true;
+		return false;
 	}
 
 	else {

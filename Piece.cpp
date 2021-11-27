@@ -358,7 +358,7 @@ using namespace std;
 			return false;
 		}
 
-		else if (fileDelta * 1 != rankDelta * 1) {
+		else if (abs(fileDelta) * 1 != abs(rankDelta) * 1) {
 			cout << "non Diag attack" << endl;
 			return false;
 		}

@@ -7,18 +7,22 @@ Black_Pawn::Black_Pawn(int file, int rank)
 	this->Type = "Black_Pawn";
 }
 
-void Black_Pawn::PawnMove(int destFile, int destRank) {
+bool Black_Pawn::PawnMove(int destFile, int destRank) {
 
 	if (ValidateStraightMove(destFile, destRank) == true && ValidatePawnMove(destFile, destRank) == true) { 
 		Move(destFile, destRank);
+		return true;
 	}
+	return false;
 }
 
-void Black_Pawn::PawnAttack(int destFile, int destRank) {
+bool Black_Pawn::PawnAttack(int destFile, int destRank) {
 
 	if (ValidateDiagAttack(destFile, destRank) == true && ValidatePawnAttack(destFile, destRank) == true) {
 		Attack(destFile, destRank);
+		return true;
 	}
+	return false;
 }
 
 bool Black_Pawn::ValidatePawnMove(int destFile, int destRank) {
@@ -50,6 +54,11 @@ bool Black_Pawn::ValidatePawnAttack(int destFile, int destRank) {
 }
 
 void Black_Pawn::TryMove(int destFile, int destRank) {
-	PawnMove(destFile, destRank);
-	PawnAttack(destFile, destRank);
+	if (PawnMove(destFile, destRank)) {
+		return;
+	}
+	else if(PawnAttack(destFile, destRank)) {
+		return;
+	}
+		
 }
