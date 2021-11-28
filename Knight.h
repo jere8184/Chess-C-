@@ -6,14 +6,14 @@ class Knight : Piece
 public:
 	Knight(int file, int rank, string colour);
 
-	void KnightMove(int DestFile, int DestRank);
+	void KnightMove(int destFile, int destRank);
 
-	void KnightAttack(int DestFile, int DestRank);
+	void KnightAttack(int destFile, int destRank);
 
-	bool ValidateKnightMove(int DestFile, int DestRank);
+	bool ValidateKnightMove(int destFile, int destRank);
 
-	bool ValidateKnightAttack(int DestFile, int DestRank);
+	bool ValidateKnightAttack(int destFile, int destRank);
 
-	void TryMove(int DestFile, int DestRank);
+	void TryMove(int destFile, int destRank);
 };
 

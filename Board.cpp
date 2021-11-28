@@ -53,20 +53,16 @@ void Board::MakeMove() {
 		indexes = Piece::To_indexs(coor);
 
 		if (piece->Type == "Queen") {
-			Queen* p = (Queen*)piece;
-			p->TryMove(get<0>(indexes), get<1>(indexes));
+			piece->TryMove(get<0>(indexes), get<1>(indexes));
 		}
 		else if (piece->Type == "Rook") {
-			Rook* p = (Rook*)piece;
-			p->TryMove(get<0>(indexes), get<1>(indexes));
+			piece->TryMove(get<0>(indexes), get<1>(indexes));
 		}
 		else if (piece->Type == "Bishop") {
-			Bishop* p = (Bishop*)piece;
-			p->TryMove(get<0>(indexes), get<1>(indexes));
+			piece->TryMove(get<0>(indexes), get<1>(indexes));
 		}
 		else if (piece->Type == "King") {
-			King* p = (King*)piece;
-			p->TryMove(get<0>(indexes), get<1>(indexes));
+			piece->TryMove(get<0>(indexes), get<1>(indexes));
 		}
 		else if (piece->Type == "Knight") {
 			Knight* p = (Knight*)piece;

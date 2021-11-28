@@ -23,9 +23,7 @@ public:
 
 	bool IsCaptured = false;
 
-	bool ValidateDiagAttack(int destFile, int destRank);
-
-	bool ValidateStraightAttack(int destFile, int destRank);
+	bool ValidateAttack(int destFile, int destRank);
 
 	string Coordinate;
 
@@ -51,7 +49,8 @@ public:
 
 	void TryMove(int file, int rank);
 
-	bool ValidateStraightMove(int destFile, int destRank);
+	bool Search(int destFile, int destRank);
 
-	bool ValidateDiagMove(int destFile, int destRank);
+	bool ValidateMove(int destFile, int destRank);
+
 };

@@ -10,14 +10,14 @@ White_Pawn::White_Pawn(int file, int rank)
 
 void White_Pawn::PawnMove(int destFile, int destRank) {
 
-	if (ValidateStraightMove(destFile, destRank) == true && ValidatePawnMove(destFile, destRank) == true) {
+	if (ValidateMove(destFile, destRank) == true && ValidatePawnMove(destFile, destRank) == true) {
 		Move(destFile, destRank);
 	}
 }
 
 void White_Pawn::PawnAttack(int destFile, int destRank) {
 
-	if (ValidateDiagAttack(destFile, destRank) == true && ValidatePawnAttack(destFile, destRank) == true) {
+	if (ValidateMove(destFile, destRank) == true && ValidatePawnAttack(destFile, destRank) == true) {
 		Attack(destFile, destRank);
 	}
 }

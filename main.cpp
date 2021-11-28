@@ -56,7 +56,7 @@ int main(){
 	//a.Move2();
 	//B.AttackLeft();
 	//Piece::To_indexs()
-	//Q.QueenDiagAttack(1, 1);
+	//Q.QueenAttack(1, 1);
 	//Q.QueenMove(, 2);
 	//a.Move2();
 	//kn.KnightMove(2, 2);
