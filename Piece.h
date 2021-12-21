@@ -47,7 +47,7 @@ public:
 
 	void Move(string coordinate);
 
-	void TryMove(int file, int rank);
+	virtual void TryMove(int file, int rank);
 
 	bool Search(int destFile, int destRank);
 

@@ -62,7 +62,7 @@ int main(){
 	//kn.KnightMove(2, 2);
 	
 	Board::PrintGamestate();
-	Board::MakeMove();
+	Board::Play();
 
 
 	//Board::board[1][1] = a;

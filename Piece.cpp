@@ -134,7 +134,8 @@ using namespace std;
 			return false;
 		}
 
-		else if (fileDelta != 0 && rankDelta != 0) 
+		//all pieces expect from knights move in non linear fasion / knight class override this method
+		else if ((fileDelta != 0 && rankDelta != 0) && (abs(fileDelta) != abs(rankDelta)))
 		{
 			cout << "non linear move" << endl;
 			return false;
@@ -237,6 +238,8 @@ using namespace std;
 			}
 			return true;
 		}
+
+		return false;
 	}
 
 

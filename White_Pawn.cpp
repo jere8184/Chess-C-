@@ -32,7 +32,7 @@ bool White_Pawn::ValidatePawnMove(int destFile, int destRank) {
 
 		return true;
 	}
-	cout << "invalid pawn move";
+	cout << "invalid pawn move" << endl;
 	return false;
 }
 

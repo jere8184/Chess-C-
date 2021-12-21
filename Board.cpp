@@ -39,7 +39,7 @@ void Board::PrintGamestate() {
 
 
 
-void Board::MakeMove() {
+void Board::Play() {
 	
 	string coor;
 	while (coor != "q")
@@ -65,16 +65,13 @@ void Board::MakeMove() {
 			piece->TryMove(get<0>(indexes), get<1>(indexes));
 		}
 		else if (piece->Type == "Knight") {
-			Knight* p = (Knight*)piece;
-			p->TryMove(get<0>(indexes), get<1>(indexes));
+			piece->TryMove(get<0>(indexes), get<1>(indexes));
 		}
 		else if (piece->Type == "White_Pawn") {
-			White_Pawn* p = (White_Pawn*)piece;
-			p->TryMove(get<0>(indexes), get<1>(indexes));
+			piece->TryMove(get<0>(indexes), get<1>(indexes));
 		}
 		else if (piece->Type == "Black_Pawn") {
-			Black_Pawn* p = (Black_Pawn*)piece;
-			p->TryMove(get<0>(indexes), get<1>(indexes));
+			piece->TryMove(get<0>(indexes), get<1>(indexes));
 		}
 		//else if(piece->Type == "Rook")
 

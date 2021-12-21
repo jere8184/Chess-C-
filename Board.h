@@ -11,5 +11,5 @@ public:
 	 static Square board[8][8];
 	 Board();
 	 static void PrintGamestate();
-	 static void MakeMove();
+	 static void Play();
 };
