@@ -16,14 +16,14 @@ using namespace std;
 
 int main(){
 	Board::Board();
-	Pawn a(0, 1, "white");
-	Pawn b(1, 1, "white");
-	Pawn c(2, 1, "white");
-	Pawn d(3, 1, "white");
-	Pawn e(4, 1, "white");
-	Pawn f(5, 1, "white");
-	Pawn g(6, 1, "white");
-	Pawn h(7, 1, "white");
+	Pawn a(0, 1, "White");
+	Pawn b(1, 1, "White");
+	Pawn c(2, 1, "White");
+	Pawn d(3, 1, "White");
+	Pawn e(4, 1, "White");
+	Pawn f(5, 1, "White");
+	Pawn g(6, 1, "White");
+	Pawn h(7, 1, "White");
 	Rook r(0, 0, "White");
 	Knight kn(1, 0, "White");
 	Bishop b0(2, 0, "White");
@@ -33,14 +33,14 @@ int main(){
 	Bishop b1(5, 0, "White");
 	Rook r1(7, 0, "White");
 
-	Pawn A(0, 6, "black");
-	Pawn B(1, 6, "black");
-	Pawn C(2, 6, "black");
-	Pawn D(3, 6, "black");
-	Pawn E(4, 6, "black");
-	Pawn F(5, 6, "black");
-	Pawn G(6, 6, "black");
-	Pawn H(7, 6, "black");
+	Pawn A(0, 6, "Black");
+	Pawn B(1, 6, "Black");
+	Pawn C(2, 6, "Black");
+	Pawn D(3, 6, "Black");
+	Pawn E(4, 6, "Black");
+	Pawn F(5, 6, "Black");
+	Pawn G(6, 6, "Black");
+	Pawn H(7, 6, "Black");
 	Rook R(0, 7, "Black");
 	Knight Kn(1, 7, "Black");
 	Bishop B0(2, 7, "Black");

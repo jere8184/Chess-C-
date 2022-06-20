@@ -24,5 +24,5 @@ Knight::Knight(int file, int rank, string colour)
 	: Piece(file, rank, colour)
 {
 	SetSymbol("N");
-	this->Type = "Knight";
+	this->SetType("Knight");
 }

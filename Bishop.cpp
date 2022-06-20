@@ -4,7 +4,7 @@ Bishop::Bishop(int file, int rank, string colour)
 	: Piece(file, rank, colour)
 {
 	SetSymbol("B");
-	this->Type = "Bishop";
+	this->SetType("Bishop");
 }
 
 bool Bishop::ValidateMove(int destFile, int destRank)

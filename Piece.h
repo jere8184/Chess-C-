@@ -1,6 +1,5 @@
 #pragma once
 
-#include<tuple>
 #include "Board.h"
 #include "Square.h"
 #include<string>
@@ -14,8 +13,16 @@ private:
 	int FileIndex;
 	string Colour;
 	string Symbol = "U";
+	bool IsCaptured = false;
+	string Coordinate;
+	string Type = "Undefined";
+	Square* Position;
+		
 
-public:
+
+
+
+protected:
 
 	bool Moved = false;
 
@@ -25,26 +32,20 @@ public:
 	int GetRank() { return RankIndex; }
 	int GetFile() { return FileIndex; }
 
-	int GetFileDelta(int destFile) {return FileIndex - destFile;}
-	int GetRankDelta(int destRank) {return RankIndex - destRank;}
+	int GetFileDelta(int destFile) {return destFile - FileIndex;}
+	int GetRankDelta(int destRank) {return destRank - RankIndex;}
 
 	void SetSymbol(string symbol) { Symbol = symbol; }
-	string GetSymbol() { return Symbol; }
+
+
+	Square* GetPosition() { return Position; }
+	void SetPosition(Square* iPositon);
 
 	string GetColour() { return Colour;}
 
-
-
+	void SetType(string type) { Type = type; }
 
 	void Captured();
-
-	bool IsCaptured = false;
-
-	string Coordinate;
-
-	string Type = "U";
-
-	Square* Square;
 
 	Piece(int fileIndex, int rankIndex, string colour);
 
@@ -58,8 +59,6 @@ public:
 
 	void Move(string coordinate);
 
-	void TryMove(int file, int rank);
-
 	bool Search(int destFile, int destRank);
 
 	virtual bool ValidateMove(int destFile, int destRank) = 0;
@@ -71,4 +70,9 @@ public:
 	bool IsDiaganolMove(int fileDelta, int rankDelta);
 
 	bool StandardChecks(int fileDelta, int rankDelta);
+
+public:
+	string GetSymbol() { return Symbol; }
+	string GetType() { return Type; }
+	void TryMove(int file, int rank);
 };

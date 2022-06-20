@@ -6,10 +6,11 @@ using namespace std;
 
 
 	Piece::Piece(int fileIndex, int rankIndex, string colour)
-		: FileIndex(fileIndex), RankIndex(rankIndex), Colour(colour), Coordinate(To_Coordinate(FileIndex, RankIndex)), Square(&Board::board[FileIndex][RankIndex])
+		: FileIndex(fileIndex), RankIndex(rankIndex), Colour(colour), Coordinate(To_Coordinate(FileIndex, RankIndex))
 	{
-		this->Square ->SetOccupation(true);
-		this->Square -> SetOccupier(this);
+		SetPosition(&Board::board[GetFile()][GetRank()]);
+		this->GetPosition()->SetOccupation(true);
+		this->GetPosition()->SetOccupier(this);
 	}
 
 	string Piece::To_Coordinate(int fileIndex, int rankIndex) {
@@ -80,100 +81,20 @@ using namespace std;
 	}
 
 	void Piece::Move(int destFile, int destRank) {
-		//unassign departuer square
-		this->Square->SetOccupation(false);
-		this->Square->SetOccupier(nullptr);
-
-		this->SetRank(destRank);
-		this->SetFile(destFile);
-		this->Coordinate = To_Coordinate(destFile, destRank);
-		this->Square = &Board::board[destFile][destRank];
-
-		//assign destination square
-		this->Square->SetOccupation(true);
-		this->Square->SetOccupier(this);
+		this->SetPosition(&Board::board[destFile][destRank]);
 		this->Moved = true;
 	}
-
-
-	void Piece::Move(string coordinate) {
-		this->Square -> SetOccupation(false);
-		this->Square -> SetOccupier(nullptr);
-		int file = get<0>(To_indexs(coordinate));
-		int rank = get<1>(To_indexs(coordinate));
-		this->FileIndex = file;
-		this->RankIndex = rank;
-		this->Coordinate = coordinate;
-		this->Square = &Board::board[file][rank];
-		this->Square->SetOccupation(true);
-		this->Square->SetOccupier(this);
-		this->Moved = true;
-	}
-
-	/*bool Piece::ValidateMove(int destFile, int destRank) {
-
-		int fileDelta = destFile - FileIndex;
-		int rankDelta = destRank - RankIndex;
-
-		if (this->Type == "Bishop" && (abs(fileDelta) != abs(rankDelta)))
-		{
-			cout << "invalid bishop move";
-			return false;
-		}
-
-		else if (this->Type == "King" && (abs(fileDelta) > 1  || abs(rankDelta) > 1))
-		{
-			cout << "invalid king move";
-			return false;
-		}
-
-		if (FileIndex + fileDelta > 7 || RankIndex + rankDelta > 7 || RankIndex + rankDelta < 0 || FileIndex + fileDelta < 0)
-		{
-			cout << "off the board" << endl;
-			return false;
-		}
-
-		//all pieces expect from knights move in non linear fasion / knight class override this method
-		else if ((fileDelta != 0 && rankDelta != 0) && (abs(fileDelta) != abs(rankDelta)))
-		{
-			cout << "non linear move" << endl;
-			return false;
-		}
-
-
-		else if (Search(destFile, destRank) == true)
-		{
-			return true;
-		}
-
-		else
-		{
-			return false;
-		}
-
-
-	}*/
 
 	void Piece::Captured() {
-		
-		this->Square->SetOccupier(nullptr);
-		this->Square->SetOccupation(false);
+		this->GetPosition()->SetOccupier(nullptr);
+		this->GetPosition()->SetOccupation(false);
 		this->IsCaptured = true;
 	}
 
 
-	void Piece::Attack(int file, int rank) {
-
-		this->Square->SetOccupation(false);
-		this->Square->SetOccupier(nullptr);
-		this->RankIndex = rank;
-		this->FileIndex = file;
-		this->Coordinate = To_Coordinate(file, rank);
-		Board::board[file][rank].GetOccupier()->Captured();
-		this->Square = &Board::board[file][rank];
-		this->Square->SetOccupation(true);
-		this->Square->SetOccupier(this);
-		this->Moved = true;
+	void Piece::Attack(int destFile, int destRank) {
+		Board::board[destFile][destRank].GetOccupier()->Captured();
+		Move(destFile, destRank);
 	}
 
 	void Piece::TryMove(int destFile, int destRank) {
@@ -189,8 +110,8 @@ using namespace std;
 
 		int fileDelta = GetFileDelta(destFile);
 		int rankDelta = GetRankDelta(destRank);
-		int fileDirection = fileDelta % 1; //will be 1 or -1
-		int rankDirection = rankDelta % 1; //will be 1 or -1
+		int fileDirection = (fileDelta > 0) - (fileDelta < 0);
+		int rankDirection = (rankDelta > 0) - (rankDelta < 0); //will be 1 or -1 or 0
 
 		for (int i = FileIndex + fileDirection; i + fileDirection != destFile; i += fileDirection) {
 			if (Board::board[i][RankIndex].IsOccupied() == true) {
@@ -267,6 +188,19 @@ using namespace std;
 		}
 
 		return true;
+	}
+
+	void Piece::SetPosition(Square* iPositon)
+	{
+		if(Position != nullptr)
+		{
+			Position->SetOccupier(nullptr);
+			Position->SetOccupation(false);
+		}
+		Position = iPositon;
+		this->Coordinate = Position->GetCoordinate();
+		Position->SetOccupier(this);
+		Position->SetOccupation(true);
 	}
 
 

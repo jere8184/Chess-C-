@@ -5,7 +5,7 @@ Queen::Queen(int file, int rank, string colour)
 	: Piece(file, rank, colour)
 {
 	SetSymbol("Q");
-	this->Type = "Queen";
+	SetType("Queen");
 }
 
 bool Queen::ValidateMove(int destFile, int destRank)

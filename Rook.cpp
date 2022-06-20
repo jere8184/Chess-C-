@@ -5,7 +5,7 @@ Rook::Rook(int file, int rank, string colour)
 	: Piece(file, rank, colour)
 {
 	SetSymbol("R");
-	this->Type = "Rook";
+	SetType("Rook");
 }
 
 bool Rook::ValidateMove(int destFile, int destRank)

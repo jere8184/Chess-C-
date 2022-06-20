@@ -5,7 +5,7 @@ Pawn::Pawn(int file, int rank, string colour)
 	: Piece(file, rank, colour)
 {
 	SetSymbol("p");
-	this->Type = "Pawn";
+	SetType("Pawn");
 }
 
 bool Pawn::ValidateMove(int destFile, int destRank) 
@@ -13,7 +13,7 @@ bool Pawn::ValidateMove(int destFile, int destRank)
 	int fileDelta = GetFileDelta(destFile);
 	int rankDelta = GetRankDelta(destRank);
 
-	int direction = GetColour() == "white" ? 1 : -1;
+	int direction = GetColour() == "White" ? 1 : -1;
 	bool isOccupied = Board::board[destFile][destRank].IsOccupied();
 	if (rankDelta == direction * 2 && fileDelta == 0 && !Moved && !isOccupied)
 	{

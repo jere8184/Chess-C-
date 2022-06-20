@@ -14,7 +14,7 @@ Board::Board() {
 		for (int rank = 0; rank < 8; rank++) {
 			board[file][rank].SetRank(file);
 			board[file][rank].SetFile(rank);
-			board[file][rank].SetCooridnate(Piece::To_Coordinate(file, rank));
+			board[file][rank].SetCooridnate(Board::To_Coordinate(file, rank));
 		}
 	}
 }
@@ -40,40 +40,84 @@ void Board::PrintGamestate() {
 
 void Board::Play() {
 	
-	string coor;
-	while (coor != "q")
+	string input;
+	while (input != "q")
 	{
 		cout << "select piece" << endl;
-		cin >> coor;
-		auto  indexes = Piece::To_indexs(coor);
-		Piece* piece = Board::board[get<0>(indexes)][get<1>(indexes)].GetOccupier();
+		cin >> input;
+		tuple<int,int> indexes = Board::To_indexs(input);
+		Piece* selectedPiece = board[get<0>(indexes)][get<1>(indexes)].GetOccupier();
 		cout << "enter move" << endl;
-		cin >> coor;
-		indexes = Piece::To_indexs(coor);
-
-		if (piece->Type == "Queen") {
-			piece->TryMove(get<0>(indexes), get<1>(indexes));
-		}
-		else if (piece->Type == "Rook") {
-			piece->TryMove(get<0>(indexes), get<1>(indexes));
-		}
-		else if (piece->Type == "Bishop") {
-			piece->TryMove(get<0>(indexes), get<1>(indexes));
-		}
-		else if (piece->Type == "King") {
-			piece->TryMove(get<0>(indexes), get<1>(indexes));
-		}
-		else if (piece->Type == "Knight") {
-			piece->TryMove(get<0>(indexes), get<1>(indexes));
-		}
-		else if (piece->Type == "White_Pawn") {
-			piece->TryMove(get<0>(indexes), get<1>(indexes));
-		}
-		else if (piece->Type == "Black_Pawn") {
-			piece->TryMove(get<0>(indexes), get<1>(indexes));
-		}
-		//else if(piece->Type == "Rook")
-
+		cin >> input;
+		indexes = Board::To_indexs(input);
+		selectedPiece->TryMove(get<0>(indexes), get<1>(indexes));
 		PrintGamestate();
 	}
+}
+
+string Board::To_Coordinate(int fileIndex, int rankIndex) {
+
+	string coordinate;
+	switch (fileIndex) {
+	case 0:
+		coordinate += "a";
+		break;
+	case 1:
+		coordinate += "b";
+		break;
+	case 2:
+		coordinate += "c";
+		break;
+	case 3:
+		coordinate += "d";
+		break;
+	case 4:
+		coordinate += "e";
+		break;
+	case 5:
+		coordinate += "f";
+		break;
+	case 6:
+		coordinate += "g";
+		break;
+	case 7:
+		coordinate += "h";
+		break;
+	}
+	return coordinate += to_string(rankIndex + 1); //chess coordinate = index + 1 as chess coordinate starts at 1 (i.e. a1)
+}
+
+tuple<int, int> Board::To_indexs(string coordinate) {
+
+	char fileChar = coordinate[0];
+	int file = 0;
+	char rankChar = coordinate[1];
+	int rank = rankChar - '1'; //index = -1 chess coordinate as index begins at 0
+	switch (fileChar) {
+	case 'a':
+		file = 0;
+		break;
+	case 'b':
+		file = 1;
+		break;
+	case 'c':
+		file += 2;
+		break;
+	case 'd':
+		file += 3;
+		break;
+	case 'e':
+		file += 4;
+		break;
+	case 'f':
+		file += 5;
+		break;
+	case 'g':
+		file += 6;
+		break;
+	case 'h':
+		file += 7;
+		break;
+	}
+	return make_tuple(file, rank);
 }

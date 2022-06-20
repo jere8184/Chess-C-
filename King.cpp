@@ -4,7 +4,7 @@ King::King(int file, int rank, string colour)
 	: Piece(file, rank, colour)
 {
 	SetSymbol("K");
-	this->Type = "King";
+	SetType("King");
 }
 
 bool King::ValidateMove(int destFile, int destRank)
