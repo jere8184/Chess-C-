@@ -1,14 +1,15 @@
 #include "Piece.h"
 #include "Queen.h"
 
+
 using namespace std;
 
 
 	Piece::Piece(int fileIndex, int rankIndex, string colour)
-		: FileIndex(fileIndex), RankIndex(rankIndex), Colour(colour), Coordinate(To_Coordinate(FileIndex, RankIndex)),Square(&Board::board[FileIndex][RankIndex])
+		: FileIndex(fileIndex), RankIndex(rankIndex), Colour(colour), Coordinate(To_Coordinate(FileIndex, RankIndex)), Square(&Board::board[FileIndex][RankIndex])
 	{
-		this->Square -> isOccupied = true;
-		this->Square -> Occupiere = this;
+		this->Square ->SetOccupation(true);
+		this->Square -> SetOccupier(this);
 	}
 
 	string Piece::To_Coordinate(int fileIndex, int rankIndex) {
@@ -78,45 +79,43 @@ using namespace std;
 		return make_tuple(file, rank);
 	}
 
-	void Piece::Move(int file, int rank) {
-		this->Square->isOccupied = false;
-		this->Square->Occupiere = nullptr;
-		this->RankIndex = rank;
-		this->FileIndex = file;
-		this->Coordinate = To_Coordinate(file, rank);
-		this->Square = &Board::board[file][rank];
-		this->Square->isOccupied = true;
-		this->Square->Occupiere = this;
+	void Piece::Move(int destFile, int destRank) {
+		//unassign departuer square
+		this->Square->SetOccupation(false);
+		this->Square->SetOccupier(nullptr);
+
+		this->SetRank(destRank);
+		this->SetFile(destFile);
+		this->Coordinate = To_Coordinate(destFile, destRank);
+		this->Square = &Board::board[destFile][destRank];
+
+		//assign destination square
+		this->Square->SetOccupation(true);
+		this->Square->SetOccupier(this);
 		this->Moved = true;
 	}
 
 
 	void Piece::Move(string coordinate) {
-		this->Square -> isOccupied = false;
-		this->Square -> Occupiere = nullptr;
+		this->Square -> SetOccupation(false);
+		this->Square -> SetOccupier(nullptr);
 		int file = get<0>(To_indexs(coordinate));
 		int rank = get<1>(To_indexs(coordinate));
 		this->FileIndex = file;
 		this->RankIndex = rank;
 		this->Coordinate = coordinate;
 		this->Square = &Board::board[file][rank];
-		this->Square->isOccupied = true;
-		this->Square->Occupiere = this;
+		this->Square->SetOccupation(true);
+		this->Square->SetOccupier(this);
 		this->Moved = true;
 	}
 
-	bool Piece::ValidateMove(int destFile, int destRank) {
+	/*bool Piece::ValidateMove(int destFile, int destRank) {
 
 		int fileDelta = destFile - FileIndex;
 		int rankDelta = destRank - RankIndex;
 
-		if (this->Type == "Rook" && (fileDelta != 0 && rankDelta != 0))
-		{
-			cout << "invalid rook move";
-			return false;
-		}
-
-		else if (this->Type == "Bishop" && (abs(fileDelta) != abs(rankDelta)))
+		if (this->Type == "Bishop" && (abs(fileDelta) != abs(rankDelta)))
 		{
 			cout << "invalid bishop move";
 			return false;
@@ -153,93 +152,121 @@ using namespace std;
 		}
 
 
-	}
+	}*/
 
 	void Piece::Captured() {
 		
-		this->Square->Occupiere = nullptr;
-		this->Square->isOccupied = false;
+		this->Square->SetOccupier(nullptr);
+		this->Square->SetOccupation(false);
 		this->IsCaptured = true;
 	}
 
 
 	void Piece::Attack(int file, int rank) {
 
-		this->Square->isOccupied = false;
-		this->Square->Occupiere = nullptr;
+		this->Square->SetOccupation(false);
+		this->Square->SetOccupier(nullptr);
 		this->RankIndex = rank;
 		this->FileIndex = file;
 		this->Coordinate = To_Coordinate(file, rank);
-		Board::board[file][rank].Occupiere->Captured();
+		Board::board[file][rank].GetOccupier()->Captured();
 		this->Square = &Board::board[file][rank];
-		this->Square->isOccupied = true;
-		this->Square->Occupiere = this;
+		this->Square->SetOccupation(true);
+		this->Square->SetOccupier(this);
 		this->Moved = true;
 	}
 
 	void Piece::TryMove(int destFile, int destRank) {
-		if (ValidateMove(destFile, destRank) == true)
+		if (ValidateMove(destFile, destRank) && StandardChecks(destFile, destRank) && Search(destFile, destRank))
 		{
-			Board::board[destFile][destRank].isOccupied ? Attack(destFile, destRank) : Move(destFile, destRank);
+			Board::board[destFile][destRank].IsOccupied() ? Attack(destFile, destRank) : Move(destFile, destRank);
 		}
 	}
 
 
-	//searches squares INBETWEEN starting postion and destination postion, returns true if all squares unoccupied, or false if one of the squares is occupied
+	//searches squares INBETWEEN starting postion and destination postion, returns true if all squares unoccupied, or false if one or more of the squares is occupied
 	bool Piece::Search(int destFile, int destRank) {
 
-		int fileDelta = destFile - this->FileIndex;
-		int rankDelta = destRank - this->RankIndex;
-		int fileDirection; //will either be +1 or -1
-		int rankDirection; //will either be +1 or -1
-		bool moveFile = false;
-		bool moveRank = false;
+		int fileDelta = GetFileDelta(destFile);
+		int rankDelta = GetRankDelta(destRank);
+		int fileDirection = fileDelta % 1; //will be 1 or -1
+		int rankDirection = rankDelta % 1; //will be 1 or -1
 
-		if (fileDelta != 0) {
-			fileDirection = fileDelta > 0 ? +1 : -1;
-			moveFile = true;
-		}
-
-		if (rankDelta != 0) {
-			rankDirection = rankDelta > 0 ? +1 : -1;
-			moveRank = true;
-		}
-
-
-		if (moveFile == true && moveRank == false)
-		{
-			for (int i = FileIndex + fileDirection; i * fileDirection < destFile * fileDirection; i += fileDirection) {
-				if (Board::board[i][RankIndex].isOccupied == true) {
-					return false;
-				}
+		for (int i = FileIndex + fileDirection; i + fileDirection != destFile; i += fileDirection) {
+			if (Board::board[i][RankIndex].IsOccupied() == true) {
+				return false;
 			}
+		}
+
+		for (int i = RankIndex + rankDirection; i * rankDirection != destRank; i += rankDirection) {
+			if (Board::board[FileIndex][i].IsOccupied() == true) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	bool Piece::StandardChecks(int destFile, int destRank)
+	{
+		int fileDelta = GetFileDelta(destFile);
+		int rankDelta = GetRankDelta(destRank);
+
+		if(fileDelta == 0 && rankDelta == 0)
+		{
+			cout << "non move\n";
+			return false;
+		}
+
+		if(destFile > 7 || destFile < 0)
+		{
+			cout << "file out of bounds\n";
+			return false;
+		}
+
+		if (destRank > 7 || destRank < 0)
+		{
+			cout << "rank out of bounds\n";
+			return false;
+		}
+
+		else
+		{
 			return true;
 		}
 
-		if (moveFile == false && moveRank == true)
+	}
+
+	bool Piece::IsDiaganolMove(int fileDelta, int rankDelta)
+	{
+		if(abs(fileDelta) != abs(rankDelta))
 		{
-			for (int i = RankIndex + rankDirection; i * rankDirection < destRank * rankDirection; i += rankDirection) {
-				if (Board::board[FileIndex][i].isOccupied == true) {
-					return false;
-				}
-			}
-			return true;
+			//cout << "non diagonal move \n";
+			return false;
+		}
+		return true;
+	}
+
+	bool Piece::IsLinearMove(int fileDelta, int rankDelta)
+	{
+		if ((fileDelta != 0 && rankDelta != 0) && (abs(fileDelta) != abs(rankDelta)))
+		{
+			//cout << "non linear move" << endl;
+			return false;
 		}
 
-		if (moveFile == true && moveRank == true)
-		{
-			int j = RankIndex + rankDirection;
+		return true;
+	}
 
-			for (int i = FileIndex + fileDirection; i * fileDirection < destFile * fileDirection; i += fileDirection) {
-				if (Board::board[i][j].isOccupied == true) {
-					return false;
-				}
-				j += rankDirection;
-			}
-			return true;
+	bool Piece::IsStraightMove(int fileDelta, int rankDelta)
+	{
+		if ((fileDelta != 0 && rankDelta != 0))
+		{
+			//cout << "non straight move" << endl;
+			return false;
 		}
 
-		return false;
+		return true;
 	}
 
 

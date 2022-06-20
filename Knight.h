@@ -10,7 +10,7 @@ public:
 
 	void KnightAttack(int destFile, int destRank);
 
-	bool ValidateKnightMove(int destFile, int destRank);
+	bool ValidateMove(int destFile, int destRank);
 
 	bool ValidateKnightAttack(int destFile, int destRank);
 

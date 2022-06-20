@@ -2,10 +2,9 @@
 #include"Queen.h"
 #include"Rook.h"
 #include"Bishop.h"
-#include"Black_Pawn.h"
+#include"Pawn.h"
 #include"King.h"
 #include"Knight.h"
-#include"White_Pawn.h"
 
 using namespace std;
 
@@ -13,9 +12,9 @@ Square Board::board[8][8];
 Board::Board() {
 	for (int file = 0; file < 8; file++) {
 		for (int rank = 0; rank < 8; rank++) {
-			board[file][rank].FileIndex = file;
-			board[file][rank].RankIndex = rank;
-			board[file][rank].coordinate = Piece::To_Coordinate(file, rank);
+			board[file][rank].SetRank(file);
+			board[file][rank].SetFile(rank);
+			board[file][rank].SetCooridnate(Piece::To_Coordinate(file, rank));
 		}
 	}
 }
@@ -29,7 +28,7 @@ void Board::PrintGamestate() {
 		for (int file = 0; file < 8; file++) {
 			
 			Square square = board[file][rank];
-			square.isOccupied ? cout << square.Occupiere->Symbol << "|" : cout << " " << "|";
+			square.IsOccupied() ? cout << square.GetOccupier()->GetSymbol() << "|" : cout << " " << "|";
 			
 		}
 		cout << endl;
@@ -47,7 +46,7 @@ void Board::Play() {
 		cout << "select piece" << endl;
 		cin >> coor;
 		auto  indexes = Piece::To_indexs(coor);
-		Piece* piece = Board::board[get<0>(indexes)][get<1>(indexes)].Occupiere;
+		Piece* piece = Board::board[get<0>(indexes)][get<1>(indexes)].GetOccupier();
 		cout << "enter move" << endl;
 		cin >> coor;
 		indexes = Piece::To_indexs(coor);

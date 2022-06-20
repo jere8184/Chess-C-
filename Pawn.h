@@ -1,9 +1,9 @@
 #pragma once
 #include "Piece.h"
-class White_Pawn : Piece
+class Pawn : Piece
 {
 public:
-	White_Pawn(int file, int rank);
+	Pawn(int file, int rank, string colour);
 
 	void PawnMove(int destFile, int destRank);
 
@@ -11,8 +11,8 @@ public:
 
 	void TryMove(int destFile, int destRank);
 
-	bool ValidatePawnMove(int destFile, int destRank);
+	bool ValidateMove(int destFile, int destRank);
 
-	bool ValidatePawnAttack(int destFile, int destRank);
+	bool ValidateAttack(int destFile, int destRank);
 };
 

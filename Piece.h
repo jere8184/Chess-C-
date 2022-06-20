@@ -1,37 +1,48 @@
 #pragma once
 
-
+#include<tuple>
 #include "Board.h"
 #include "Square.h"
 #include<string>
-#include<tuple>
 
 using namespace std;
 
 class Piece {
 
+private:
+	int RankIndex;
+	int FileIndex;
+	string Colour;
+	string Symbol = "U";
 
 public:
 
 	bool Moved = false;
 
-	int RankIndex;
+	void SetRank(int rank) { RankIndex = rank; }
+	void SetFile(int file) { FileIndex = file; }
 
-	int FileIndex;
+	int GetRank() { return RankIndex; }
+	int GetFile() { return FileIndex; }
+
+	int GetFileDelta(int destFile) {return FileIndex - destFile;}
+	int GetRankDelta(int destRank) {return RankIndex - destRank;}
+
+	void SetSymbol(string symbol) { Symbol = symbol; }
+	string GetSymbol() { return Symbol; }
+
+	string GetColour() { return Colour;}
+
+
+
 
 	void Captured();
 
 	bool IsCaptured = false;
 
-	bool ValidateAttack(int destFile, int destRank);
-
 	string Coordinate;
 
-	string Symbol = "U";
-
 	string Type = "U";
-
-	string Colour;
 
 	Square* Square;
 
@@ -47,10 +58,17 @@ public:
 
 	void Move(string coordinate);
 
-	virtual void TryMove(int file, int rank);
+	void TryMove(int file, int rank);
 
 	bool Search(int destFile, int destRank);
 
-	bool ValidateMove(int destFile, int destRank);
+	virtual bool ValidateMove(int destFile, int destRank) = 0;
 
+	bool IsLinearMove(int fileDelta, int rankDelta);
+
+	bool IsStraightMove(int fileDelta, int rankDelta);
+
+	bool IsDiaganolMove(int fileDelta, int rankDelta);
+
+	bool StandardChecks(int fileDelta, int rankDelta);
 };

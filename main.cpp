@@ -5,8 +5,7 @@
 #include"Board.h"
 #include"Piece.h"
 #include"Square.h"
-#include"White_Pawn.h"
-#include"Black_Pawn.h"
+#include"Pawn.h"
 #include"Queen.h"
 #include"Bishop.h"
 #include"King.h"
@@ -17,14 +16,14 @@ using namespace std;
 
 int main(){
 	Board::Board();
-	White_Pawn a(0, 1);
-	White_Pawn b(1, 1);
-	White_Pawn c(2, 1);
-	White_Pawn d(3, 1);
-	White_Pawn e(4, 1);
-	White_Pawn f(5, 1);
-	White_Pawn g(6, 1);
-	White_Pawn h(7, 1);
+	Pawn a(0, 1, "white");
+	Pawn b(1, 1, "white");
+	Pawn c(2, 1, "white");
+	Pawn d(3, 1, "white");
+	Pawn e(4, 1, "white");
+	Pawn f(5, 1, "white");
+	Pawn g(6, 1, "white");
+	Pawn h(7, 1, "white");
 	Rook r(0, 0, "White");
 	Knight kn(1, 0, "White");
 	Bishop b0(2, 0, "White");
@@ -34,14 +33,14 @@ int main(){
 	Bishop b1(5, 0, "White");
 	Rook r1(7, 0, "White");
 
-	Black_Pawn A(0, 6);
-	Black_Pawn B(1, 6);
-	Black_Pawn C(2, 6);
-	Black_Pawn D(3, 6);
-	Black_Pawn E(4, 6);
-	Black_Pawn F(5, 6);
-	Black_Pawn G(6, 6);
-	Black_Pawn H(7, 6);
+	Pawn A(0, 6, "black");
+	Pawn B(1, 6, "black");
+	Pawn C(2, 6, "black");
+	Pawn D(3, 6, "black");
+	Pawn E(4, 6, "black");
+	Pawn F(5, 6, "black");
+	Pawn G(6, 6, "black");
+	Pawn H(7, 6, "black");
 	Rook R(0, 7, "Black");
 	Knight Kn(1, 7, "Black");
 	Bishop B0(2, 7, "Black");
