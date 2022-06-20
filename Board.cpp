@@ -36,8 +36,6 @@ void Board::PrintGamestate() {
 	cout << " |a|b|c|d|e|f|g|h|" << endl;
 }
 
-
-
 void Board::Play() {
 	
 	string input;

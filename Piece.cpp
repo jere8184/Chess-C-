@@ -1,9 +1,7 @@
 #include "Piece.h"
 #include "Queen.h"
 
-
 using namespace std;
-
 
 	Piece::Piece(int fileIndex, int rankIndex, string colour)
 		: FileIndex(fileIndex), RankIndex(rankIndex), Colour(colour), Coordinate(To_Coordinate(FileIndex, RankIndex))
@@ -11,73 +9,6 @@ using namespace std;
 		SetPosition(&Board::board[GetFile()][GetRank()]);
 		this->GetPosition()->SetOccupation(true);
 		this->GetPosition()->SetOccupier(this);
-	}
-
-	string Piece::To_Coordinate(int fileIndex, int rankIndex) {
-
-		string coordinate;
-		switch (fileIndex) {
-		case 0:
-			coordinate += "a";
-			break;
-		case 1:
-			coordinate += "b";
-			break;
-		case 2:
-			coordinate += "c";
-			break;
-		case 3:
-			coordinate += "d";
-			break;
-		case 4:
-			coordinate += "e";
-			break;
-		case 5:
-			coordinate += "f";
-			break;
-		case 6:
-			coordinate += "g";
-			break;
-		case 7:
-			coordinate += "h";
-			break;
-		}
-		return coordinate += to_string(rankIndex + 1); //chess coordinate = index + 1 as chess coordinate starts at 1 (i.e. a1)
-	}
-
-	tuple<int, int> Piece::To_indexs(string coordinate) {
-
-		char fileChar = coordinate[0];
-		int file = 0;
-		char rankChar = coordinate[1];
-		int rank = rankChar - '1'; //index = -1 chess coordinate as index begins at 0
-		switch (fileChar) {
-		case 'a':
-			file = 0;
-			break;
-		case 'b':
-			file = 1;
-			break;
-		case 'c':
-			file += 2;
-			break;
-		case 'd':
-			file += 3;
-			break;
-		case 'e':
-			file += 4;
-			break;
-		case 'f':
-			file += 5;
-			break;
-		case 'g':
-			file += 6;
-			break;
-		case 'h':
-			file += 7;
-			break;
-		}
-		return make_tuple(file, rank);
 	}
 
 	void Piece::Move(int destFile, int destRank) {
@@ -91,19 +22,18 @@ using namespace std;
 		this->IsCaptured = true;
 	}
 
-
 	void Piece::Attack(int destFile, int destRank) {
 		Board::board[destFile][destRank].GetOccupier()->Captured();
 		Move(destFile, destRank);
 	}
 
+	//checks move is legal and the makes the move if it is
 	void Piece::TryMove(int destFile, int destRank) {
 		if (ValidateMove(destFile, destRank) && StandardChecks(destFile, destRank) && Search(destFile, destRank))
 		{
 			Board::board[destFile][destRank].IsOccupied() ? Attack(destFile, destRank) : Move(destFile, destRank);
 		}
 	}
-
 
 	//searches squares INBETWEEN starting postion and destination postion, returns true if all squares unoccupied, or false if one or more of the squares is occupied
 	bool Piece::Search(int destFile, int destRank) {
