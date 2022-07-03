@@ -47,28 +47,8 @@ void Board::PrintGamestate() {
 
 void Board::Play(Piece* selectedPiece, Square* destSquare)
 {
-	
-	//string input;
-	//while (input != "q")
-	//{
-	//cout << "select piece" << endl;
-	//cin >> input;
-	//tuple<int,int> indexes = Board::To_indexs(input);
-	//Piece* selectedPiece;
-	//if(GetSquare(get<0>(indexes), get<1>(indexes))->IsOccupied())
-	//{
-	//	selectedPiece = board[get<0>(indexes)][get<1>(indexes)]->GetOccupier();
-	//}
-	//else
-	//{
-	//	return;
-	//}
-	//cout << "enter move" << endl;
-	//cin >> input;
-	//indexes = Board::To_indexs(input);
 	selectedPiece->TryMove(destSquare->GetFile(), destSquare->GetRank());
 	PrintGamestate();
-	//}
 }
 
 string Board::To_Coordinate(int fileIndex, int rankIndex) {
@@ -236,16 +216,3 @@ void Board::Turn()
 		turn = "White";
 	}
 }
-
-/*sf::Vector2i mPos = sf::Mouse::getPosition(*w);
-for (auto& file : board)
-{
-	for (Square* square : file)
-	{
-		sf::Vector2f sPos = square->GetSprite()->getPosition();
-		if (square->IsOccupied() && mPos.x > sPos.x && mPos.x < sPos.x + 100 && mPos.y > sPos.y && mPos.y < sPos.y + 100)
-		{
-			Square* selectedSquare = square;
-		}
-	}
-}*/

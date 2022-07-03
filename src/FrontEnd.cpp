@@ -4,8 +4,6 @@ FrontEnd::FrontEnd(int xSize, int ySize)
 {
     XSize = xSize;
     YSize = ySize;
-    
-    //Window = window;
 }
 
 sf::RenderWindow* FrontEnd::GetWindow()

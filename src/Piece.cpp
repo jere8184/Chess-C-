@@ -55,6 +55,7 @@ using namespace std;
 		{
 			if(Board::GetSquare(file, rank)->IsOccupied())
 			{
+				cout << "blocked" << endl;
 				return false;
 			}
 			file += fileDirection;
@@ -122,7 +123,6 @@ using namespace std;
 	{
 		if(abs(fileDelta) != abs(rankDelta))
 		{
-			//cout << "non diagonal move \n";
 			return false;
 		}
 		return true;
@@ -132,7 +132,6 @@ using namespace std;
 	{
 		if ((fileDelta != 0 && rankDelta != 0) && (abs(fileDelta) != abs(rankDelta)))
 		{
-			//cout << "non linear move" << endl;
 			return false;
 		}
 
@@ -143,7 +142,6 @@ using namespace std;
 	{
 		if ((fileDelta != 0 && rankDelta != 0))
 		{
-			//cout << "non straight move" << endl;
 			return false;
 		}
 
