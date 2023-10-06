@@ -18,7 +18,7 @@ private:
 	bool IsCaptured = false;
 	string Coordinate;
 	string Type = "Undefined";
-	Square* Position;
+	Square* Position = nullptr;
 	sf::Texture Texture;
 
 

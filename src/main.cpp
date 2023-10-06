@@ -51,22 +51,8 @@ int main(){
 	Bishop B1(5, 7, "Black");
 	Rook R1(7, 7, "Black");
 
-	//DrawBoard();
-
-	//a.Move2();
-	//B.AttackLeft();
-	//Piece::To_indexs()
-	//Q.QueenAttack(1, 1);
-	//Q.QueenMove(, 2);
-	//a.Move2();
-	//kn.KnightMove(2, 2);
-	
 	Board::PrintGamestate();
 	Board::DrawBoard();
-	//Board::Play();
 
-
-	//Board::board[1][1] = a;
-	//Piece c = b.board[1][1];
 	return 0;
 }
