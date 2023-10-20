@@ -6,3 +6,4 @@ cd build
 conan install ../conan/ --build=missing -s build_type=Debug
 cmake ..
 cmake --build .
+./Debug/chess_game.exe
